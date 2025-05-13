@@ -1,10 +1,10 @@
 import { API_BASE_URL } from "./constants";
 import type { Entity } from "./types";
 
-export const getEntities = async ({
+export const getEntities = async({
   apiKey,
   projectId,
-  workspaceId,
+  workspaceId
 }: {
   workspaceId: string;
   projectId: string;
@@ -16,9 +16,9 @@ export const getEntities = async ({
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "X-API-KEY": apiKey,
-      },
-    },
+        "X-API-KEY": apiKey
+      }
+    }
   );
 
   if (!res.ok) {
