@@ -1,13 +1,12 @@
 import "./assets/main.css";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { ProjectTable } from "./components/ProjectTable";
+
 import { EntityView } from "./components/EntityView";
 import { FallbackPage } from "./components/FallbackPage";
+import { ProjectTable } from "./components/ProjectTable/ProjectTable";
 import { ProjectProvider } from "./contexts/Project/ProjectProvider";
 
 function App() {
-  console.log(import.meta.env);
-
   return (
     <BrowserRouter>
       <Routes>
