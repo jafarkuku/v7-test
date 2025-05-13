@@ -1,4 +1,4 @@
-import styles from "@v7-product-interview-task/styles/FallbackPage.module.css"
+import styles from "@v7-product-interview-task/styles/FallbackPage.module.css";
 
 export const FallbackPage = () => {
   const hostname = window.location.hostname;
@@ -8,21 +8,16 @@ export const FallbackPage = () => {
     <div>
       <h1>Welcome to Go-lite</h1>
       <p>
-        Visit{" "}
-        <span className={styles.monospace}>/:workspaceId/projects/:projectId</span> to
-        use this app.
+        Visit <span className={styles.monospace}>/:workspaceId/projects/:projectId</span> to use
+        this app.
       </p>
       <p>
-        Or visit a project in
-        {' '}<a
-          href="https://go.v7labs.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        Or visit a project in{" "}
+        <a href="https://go.v7labs.com/" target="_blank" rel="noopener noreferrer">
           Go
-        </a>{' '}
-        and replace the hostname with
-        {' '}<span className={styles.monospace}>{`${hostname}:${port}`}</span>
+        </a>{" "}
+        and replace the hostname with{" "}
+        <span className={styles.monospace}>{`${hostname}:${port}`}</span>
       </p>
     </div>
   );

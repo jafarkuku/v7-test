@@ -1,5 +1,6 @@
-import { useProjectContext } from "@/contexts/Project/useProjectContext";
 import { Link, useParams } from "react-router";
+
+import { useProjectContext } from "@/contexts/Project/useProjectContext";
 
 export const EntityView = () => {
   const { projectId, workspaceId } = useProjectContext();
