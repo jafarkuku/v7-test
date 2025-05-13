@@ -1,4 +1,4 @@
-import { Entity, Property, PropertyType } from "@v7-product-interview-task/api";
+import { Entity, Property } from "@v7-product-interview-task/api";
 
 export type PropertyTool = Property["tool"] | "gpt_4_1" | "gemini_2_0_flash";
 
@@ -261,7 +261,6 @@ export const PROPERTY_TOOL_METADATA: Record<PropertyTool, ToolInfo> = {
     acceptsInput: true,
     acceptsPrompt: true,
   },
-
   imagen: {
     label: "Imagen",
     provider: "Google",
@@ -278,24 +277,25 @@ export const PROPERTY_TOOL_METADATA: Record<PropertyTool, ToolInfo> = {
   },
 };
 
-export const PROPERTY_TYPES: Record<PropertyType, string> = {
+// Im omitting these in order to match what I see on the live platform
+
+export const PROPERTY_TYPES: Record<Property["type"], string> = {
   text: "Text",
-  pdf: "PDF",
+  number: "Number",
+  file: "File",
+  collection: "Collection",
   single_select: "Single Select",
   multi_select: "Multi Select",
-  user_select: "User Select",
-  collection: "Collection",
-  file_collection: "File Collection",
-  reference: "Reference",
-  file: "File",
-  json: "JSON",
   url: "URL",
+  reference: "Reference",
+  json: "JSON",
+  file_collection: "Page Splitter",
 };
 
 export const ENTITY_FIELD_STATUS_LABELS: Record<Entity["fields"][string]["status"], string> = {
-  idle: "Waiting for configuration",
+  idle: "Waiting for configuration...",
   uploading: "Uploading",
-  waiting: "Waiting for configuration",
+  waiting: "Waiting for configuration...",
   computing: "Calculating",
   complete: "Complete",
   error: "Error",

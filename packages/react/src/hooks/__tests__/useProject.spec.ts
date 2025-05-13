@@ -65,10 +65,10 @@ describe("useProject", () => {
 
     const { result } = renderHook(() => useProject());
 
-    const property = await result.current.createProperty("pdf");
+    const property = await result.current.createProperty("number");
 
     expect(mockCreateNewProperty).toHaveBeenCalledWith({
-      type: "pdf",
+      type: "number",
       workspaceId: "mock-ws",
       projectId: "mock-project",
     });

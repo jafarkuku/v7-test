@@ -1,5 +1,6 @@
 import {
   Type,
+  Hash,
   File,
   Database,
   CheckCircle,
@@ -7,27 +8,25 @@ import {
   Link as LinkIcon,
   ArrowUpRight,
   Code,
-  FileText,
   LucideIcon,
 } from "lucide-react";
 
-import { Property, PropertyType } from "@v7-product-interview-task/api";
+import { Property } from "@v7-product-interview-task/api";
 
 import { InputField } from "@/components/ui/Input/Input";
 import List from "@/components/ui/List/List";
 
 import { usePropertyTypePickerController } from "./hooks/usePropertyTypePickerController";
 
-const ICONS: Record<PropertyType, LucideIcon> = {
+const ICONS: Record<Property["type"], LucideIcon> = {
   text: Type,
+  number: Hash,
   file: File,
   json: Code,
   url: LinkIcon,
-  pdf: FileText,
   collection: Database,
   single_select: CheckCircle,
   multi_select: CheckSquare,
-  user_select: CheckCircle,
   reference: ArrowUpRight,
   file_collection: File,
 };
@@ -62,7 +61,7 @@ export const PropertyTypePicker: React.FC<PropertyTypePickerProps> = ({
         items={propertyTypes}
         className="max-h-80 overflow-auto"
         renderItem={([type, label]) => {
-          const Icon = ICONS[type];
+          const Icon = ICONS[type as Property["type"]];
           return (
             <div
               role="option"

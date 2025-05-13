@@ -31,7 +31,7 @@ beforeEach(() => {
     project: null,
     entities: [],
     loading: false,
-    error: false,
+    error: null,
   });
 
   vi.clearAllMocks();

@@ -11,8 +11,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const apiKey = import.meta.env.VITE_API_KEY;
 
-  console.log("###### API", apiKey);
-
   if (!apiKey) {
     throw new Error("VITE_API_KEY is not set");
   }

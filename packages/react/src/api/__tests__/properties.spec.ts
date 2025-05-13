@@ -38,6 +38,7 @@ describe("property API actions", () => {
         description: "",
         inputs: [],
         tool: "gpt_4_1",
+        is_grounded: false,
         type,
       },
     });

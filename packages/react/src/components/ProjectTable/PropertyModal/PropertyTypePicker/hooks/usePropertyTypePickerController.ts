@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { PropertyType, Property } from "@v7-product-interview-task/api";
+import { Property } from "@v7-product-interview-task/api";
 
 import { PROPERTY_TYPES } from "@/constants";
 import { useProject } from "@/hooks/useProject";
@@ -13,12 +13,12 @@ export function usePropertyTypePickerController(
   const { error, createProperty } = useProject();
 
   const propertyTypes = useMemo(() => {
-    return (Object.entries(PROPERTY_TYPES) as [PropertyType, string][]).filter(([, label]) =>
+    return (Object.entries(PROPERTY_TYPES) as [Property["type"], string][]).filter(([, label]) =>
       label.toLowerCase().includes(query.trim().toLowerCase()),
     );
   }, [query]);
 
-  const handleCreateProperty = (type: PropertyType) => async () => {
+  const handleCreateProperty = (type: Property["type"]) => async () => {
     createProperty(type)
       .then((property) => {
         onCreateProperty(property);

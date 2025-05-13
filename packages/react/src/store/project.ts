@@ -1,12 +1,6 @@
 import { create } from "zustand";
 
-import {
-  Project,
-  Entity,
-  PropertyType,
-  UpdatePropertyRequest,
-  Property,
-} from "@v7-product-interview-task/api";
+import { Project, Entity, UpdatePropertyRequest, Property } from "@v7-product-interview-task/api";
 
 import { getEntities } from "@/api/entities";
 import { getProject } from "@/api/projects";
@@ -21,7 +15,7 @@ export interface ProjectStore {
   } | null;
   fetchData: (params: { workspaceId: string; projectId: string }) => Promise<void>;
   createNewProperty: (params: {
-    type: PropertyType;
+    type: Property["type"];
     workspaceId: string;
     projectId: string;
   }) => Promise<Property>;

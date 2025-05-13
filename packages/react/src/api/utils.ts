@@ -13,23 +13,30 @@ export const getAddPropertyRequestBody = ({
   projectId: string;
   type: Property["type"];
 }): AddPropertyRequest => {
-  const base: Pick<AddPropertyRequest, "name" | "tool" | "description" | "inputs"> = {
-    name: "New Property",
-    tool: "gpt_4_1" as AddPropertyRequest["tool"],
-    description: "",
-    inputs: [],
-  };
+  const base: Pick<AddPropertyRequest, "name" | "tool" | "description" | "inputs" | "is_grounded"> =
+    {
+      name: "New Property",
+      tool: "gpt_4_1" as AddPropertyRequest["tool"],
+      description: "",
+      inputs: [],
+      is_grounded: false,
+    };
 
   switch (type) {
-    case "pdf":
+    case "file":
+      return {
+        ...base,
+        type,
+        tool: "manual",
+      };
+    case "number" as Property["type"]:
       return {
         ...base,
         type,
         config: {
-          splitter: "none",
+          format: "auto",
         },
-      };
-
+      } as AddPropertyRequest;
     case "reference":
       return {
         ...base,
@@ -38,28 +45,37 @@ export const getAddPropertyRequestBody = ({
           project_id: projectId,
           entity_limit: 0,
         },
-      };
+      } as AddPropertyRequest;
     case "collection":
-    case "file_collection":
       return {
         ...base,
         type,
+        //@ts-expect-error expected
+        config: {
+          properties: [],
+        },
       };
-
+    case "url":
+      return {
+        ...base,
+        type,
+        tool: "manual",
+      };
     case "single_select":
     case "multi_select":
-    case "user_select":
       return {
         ...base,
         type,
-        config: {},
-      };
-
+        config: {
+          options: [],
+          default_option: null,
+        },
+      } as AddPropertyRequest;
     default:
       return {
         ...base,
         type,
-      };
+      } as AddPropertyRequest;
   }
 };
 
@@ -70,7 +86,7 @@ type UpdateRequestBase = {
 };
 
 type BuildArgs =
-  | (UpdateRequestBase & { type: "pdf" })
+  | (UpdateRequestBase & { type: "number" })
   | (UpdateRequestBase & { type: "reference" })
   | (UpdateRequestBase & { type: "single_select" | "multi_select" | "user_select" })
   | (UpdateRequestBase & { type: "collection" | "file_collection" })
@@ -87,15 +103,19 @@ export function buildUpdatePropertyRequest(
   };
 
   switch (args.type) {
-    case "pdf":
+    case "file":
+      return {
+        ...base,
+        type: args.type,
+      };
+    case "number" as Property["type"]:
       return {
         ...base,
         type: args.type,
         config: {
-          splitter: "none",
+          format: "auto",
         },
-      };
-
+      } as UpdatePropertyRequest;
     case "reference":
       return {
         ...base,
@@ -108,7 +128,6 @@ export function buildUpdatePropertyRequest(
 
     case "single_select":
     case "multi_select":
-    case "user_select":
       return {
         ...base,
         type: args.type,
@@ -126,6 +145,6 @@ export function buildUpdatePropertyRequest(
       return {
         ...base,
         type: args.type,
-      };
+      } as UpdatePropertyRequest;
   }
 }

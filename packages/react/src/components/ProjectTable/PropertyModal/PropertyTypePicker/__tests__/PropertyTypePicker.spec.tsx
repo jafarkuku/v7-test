@@ -9,7 +9,7 @@ vi.mock("../hooks/usePropertyTypePickerController", () => ({
     query: "",
     propertyTypes: [
       ["text", "Text"],
-      ["pdf", "PDF"],
+      ["number", "Number"],
     ],
     handleTextChange: vi.fn(),
     handleCreateProperty: (type: string) => () => {
@@ -34,7 +34,7 @@ describe("PropertyTypePicker", () => {
     const items = screen.getAllByRole("option");
     expect(items.length).toBe(2);
     expect(screen.getByText("Text")).toBeInTheDocument();
-    expect(screen.getByText("PDF")).toBeInTheDocument();
+    expect(screen.getByText("Number")).toBeInTheDocument();
   });
 
   it("calls onCreateProperty with correct property when clicked", () => {
@@ -43,8 +43,8 @@ describe("PropertyTypePicker", () => {
     fireEvent.click(screen.getByText("Text"));
     expect(mockCreate).toHaveBeenCalledWith({ id: "mock-text" });
 
-    fireEvent.click(screen.getByText("PDF"));
-    expect(mockCreate).toHaveBeenCalledWith({ id: "mock-pdf" });
+    fireEvent.click(screen.getByText("Number"));
+    expect(mockCreate).toHaveBeenCalledWith({ id: "mock-number" });
 
     expect(mockCreate).toHaveBeenCalledTimes(2);
   });

@@ -1,4 +1,4 @@
-import type { Property, UpdatePropertyRequest } from "@v7-product-interview-task/api";
+import type { Property } from "@v7-product-interview-task/api";
 
 import { getAddPropertyRequestBody, buildUpdatePropertyRequest } from "../utils";
 
@@ -11,21 +11,6 @@ const baseArgs = {
 describe("getAddPropertyRequestBody", () => {
   const projectId = "proj123";
 
-  it("returns correct body for pdf type", () => {
-    const result = getAddPropertyRequestBody({ projectId, type: "pdf" });
-
-    expect(result).toEqual({
-      name: "New Property",
-      tool: "gpt_4_1",
-      description: "",
-      inputs: [],
-      type: "pdf",
-      config: {
-        splitter: "none",
-      },
-    });
-  });
-
   it("returns correct body for reference type", () => {
     const result = getAddPropertyRequestBody({ projectId, type: "reference" });
 
@@ -35,6 +20,7 @@ describe("getAddPropertyRequestBody", () => {
       description: "",
       inputs: [],
       type: "reference",
+      is_grounded: false,
       config: {
         project_id: projectId,
         entity_limit: 0,
@@ -42,10 +28,9 @@ describe("getAddPropertyRequestBody", () => {
     });
   });
 
-  it("returns correct body for select types", () => {
-    const types = ["single_select", "multi_select", "user_select"] as const;
-
-    for (const type of types) {
+  test.each([["single_select"], ["multi_select"]] as const)(
+    "returns correct body for type %s",
+    (type) => {
       const result = getAddPropertyRequestBody({ projectId, type });
 
       expect(result).toEqual({
@@ -54,10 +39,14 @@ describe("getAddPropertyRequestBody", () => {
         description: "",
         inputs: [],
         type,
-        config: {},
+        is_grounded: false,
+        config: {
+          options: [],
+          default_option: null,
+        },
       });
-    }
-  });
+    },
+  );
 
   it("returns correct body for other types", () => {
     const result = getAddPropertyRequestBody({ projectId, type: "text" });
@@ -66,6 +55,7 @@ describe("getAddPropertyRequestBody", () => {
       name: "New Property",
       tool: "gpt_4_1",
       description: "",
+      is_grounded: false,
       inputs: [],
       type: "text",
     });
@@ -73,20 +63,6 @@ describe("getAddPropertyRequestBody", () => {
 });
 
 describe("buildUpdatePropertyRequest", () => {
-  it("builds update request for pdf", () => {
-    const result = buildUpdatePropertyRequest({
-      ...baseArgs,
-      type: "pdf",
-    });
-
-    expect(result).toEqual<UpdatePropertyRequest>({
-      ...baseArgs,
-      inputs: [],
-      type: "pdf",
-      config: { splitter: "none" },
-    });
-  });
-
   it("builds update request for reference", () => {
     const result = buildUpdatePropertyRequest({
       ...baseArgs,
@@ -94,7 +70,7 @@ describe("buildUpdatePropertyRequest", () => {
       projectId: "ref-project",
     });
 
-    expect(result).toEqual<UpdatePropertyRequest>({
+    expect(result).toEqual({
       ...baseArgs,
       inputs: [],
       type: "reference",
@@ -106,7 +82,7 @@ describe("buildUpdatePropertyRequest", () => {
   });
 
   it("builds update request for select types", () => {
-    const types = ["single_select", "multi_select", "user_select"] as const;
+    const types = ["single_select", "multi_select"] as const;
 
     for (const type of types) {
       const result = buildUpdatePropertyRequest({
@@ -114,7 +90,7 @@ describe("buildUpdatePropertyRequest", () => {
         type,
       });
 
-      expect(result).toEqual<UpdatePropertyRequest>({
+      expect(result).toEqual({
         ...baseArgs,
         inputs: [],
         type,
@@ -132,7 +108,7 @@ describe("buildUpdatePropertyRequest", () => {
         type,
       });
 
-      expect(result).toEqual<UpdatePropertyRequest>({
+      expect(result).toEqual({
         ...baseArgs,
         inputs: [],
         type,
@@ -146,7 +122,7 @@ describe("buildUpdatePropertyRequest", () => {
       type: "text",
     });
 
-    expect(result).toEqual<UpdatePropertyRequest>({
+    expect(result).toEqual({
       ...baseArgs,
       inputs: [],
       type: "text",

@@ -23,11 +23,11 @@ describe("usePropertyTypePickerController", () => {
   it("returns filtered property types based on query", () => {
     const { result } = renderHook(() => usePropertyTypePickerController(onCreateProperty, onError));
 
-    expect(result.current.propertyTypes).toHaveLength(11);
+    expect(result.current.propertyTypes).toHaveLength(10);
 
     act(() => {
       result.current.handleTextChange({
-        target: { value: "pdf" },
+        target: { value: "number" },
       } as React.ChangeEvent<HTMLInputElement>);
     });
 
