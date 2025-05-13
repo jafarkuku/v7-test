@@ -1,4 +1,16 @@
 {
   "name": "@v7-product-interview-task/api",
-  "main": "src/index.ts"
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "eslint": "^9.26.0",
+    "eslint-config-galex": "^4.5.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.0",
+    "vitest": "^3.1.3"
+  }
 }

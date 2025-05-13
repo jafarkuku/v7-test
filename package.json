@@ -1,9 +1,11 @@
 {
   "name": "v7-product-interview-task",
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@tsconfig/recommended": "^1.0.8"
+    "@tsconfig/recommended": "^1.0.8",
+    "eslint-plugin-import": "^2.31.0"
   }
 }
