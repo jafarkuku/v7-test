@@ -4,7 +4,7 @@ import { CommandCenter } from "./CommandCenter/CommandCenter";
 import { useProjectTableController } from "./hooks/useProjectTableController";
 import { ProjectTableCell } from "./ProjectTableCell";
 import { ProjectTableHeaderCell } from "./ProjectTableHeaderCell";
-import { PropertyModal } from "./PropertyModal";
+import { PropertyModal } from "./PropertyModal/PropertyModal";
 import { Error } from "../Error/Error";
 
 interface ProjectTableProps {
