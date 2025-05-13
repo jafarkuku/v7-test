@@ -1,27 +1,40 @@
 import type { components } from "./api";
 
+// Im omitting these in order to match what I see on the live platform
+type OverridenPropertyType =
+  | Exclude<
+      components["schemas"]["Projects.PropertyResponse"]["type"],
+      "pdf" | "user_select"
+    >
+  | "number";
+
 export type Entity = components["schemas"]["Projects.Entities.EntityResponse"];
-export type Project = components["schemas"]["Projects.ProjectResponse"];
-export type Property = components["schemas"]["Projects.PropertyResponse"];
-export type AddPropertyRequest =
-  components["schemas"]["Projects.AddPropertyRequest"];
-export type AddBasicPropertyRequest =
-  components["schemas"]["Projects.AddBasicPropertyRequest"];
-export type AddPDFPropertyRequest =
-  components["schemas"]["Projects.AddPDFPropertyRequest"];
-export type AddSingleSelectPropertyRequest =
-  components["schemas"]["Projects.AddSingleSelectPropertyRequest"];
-export type BasicPropertyType =
-  components["schemas"]["Projects.BasicPropertyType"];
+export type Property = Omit<
+  components["schemas"]["Projects.PropertyResponse"],
+  "type"
+> & {
+  type: OverridenPropertyType;
+};
+export type Project = Omit<
+  components["schemas"]["Projects.ProjectResponse"],
+  "properties"
+> & {
+  properties: Property[];
+};
+
+export type AddPropertyRequest = Omit<
+  components["schemas"]["Projects.AddPropertyRequest"],
+  "type"
+> & {
+  type: OverridenPropertyType;
+};
 export type UpdatePropertyRequest =
   components["schemas"]["Projects.UpdatePropertyRequest"];
-export type UpdateBasicPropertyRequest =
-  components["schemas"]["Projects.UpdateBasicPropertyRequest"];
-export type UpdatePDFPropertyRequest =
-  components["schemas"]["Projects.UpdatePDFPropertyRequest"];
-export type UpdateSingleSelectPropertyRequest =
-  components["schemas"]["Projects.UpdateSingleSelectPropertyRequest"];
-export type PropertyType =
-  components["schemas"]["Projects.Common.PropertyType"];
+export type UpdateBasicPropertyRequest = Omit<
+  components["schemas"]["Projects.UpdateBasicPropertyRequest"],
+  "type"
+> & {
+  type: OverridenPropertyType;
+};
 
 export type DeleteResponse = components["schemas"]["Common.DeleteResponse"];
