@@ -1,6 +1,28 @@
-import { Entity, Project } from "@v7-product-interview-task/api";
+import { Entity, Project, Property } from "@v7-product-interview-task/api";
 
 import { ENTITY_FIELD_STATUS_LABELS } from "@/constants";
+
+function getFieldInitialValue(field: Entity["fields"][number]): string | number | undefined {
+  if (field.status !== "complete") {
+    return ENTITY_FIELD_STATUS_LABELS[field.status];
+  }
+
+  if (field.property_type === ("number" as Property["type"])) {
+    //@ts-expect-error I can see this value in the return
+    return field.tool_value?.value?.number;
+  }
+
+  if (field.property_type === "file") {
+    //@ts-expect-error I can see this value in the return
+    return field.tool_value?.value?.original_filename;
+  }
+
+  return (
+    field.tool_value?.value?.toString() ??
+    field.manual_value?.value?.toString() ??
+    (field.status ? ENTITY_FIELD_STATUS_LABELS[field.status] : "")
+  );
+}
 
 export function buildRows({
   entities,
@@ -21,10 +43,7 @@ export function buildRows({
     link: `/${workspaceId}/projects/${projectId}/entities/${entity.id}`,
     cells: properties.map((property, index) => {
       const field = entity.fields[property.slug];
-      const initialValue =
-        field?.tool_value?.value?.toString() ??
-        field?.manual_value?.value?.toString() ??
-        (field?.status ? ENTITY_FIELD_STATUS_LABELS[field.status] : "");
+      const initialValue = getFieldInitialValue(field);
 
       const onSave = onSaveCell && ((val: string) => onSaveCell(entity.id, property.slug, val));
 

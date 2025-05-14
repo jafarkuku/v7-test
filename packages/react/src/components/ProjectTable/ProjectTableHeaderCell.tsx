@@ -11,7 +11,7 @@ type Props = {
 const ProjectTableHeaderCellComponent = ({ property, colIndex, onClick }: Props) => {
   return (
     <th
-      className={"min-w-[180px] border-r border-gray-700"}
+      className={"min-w-[180px] border-r border-gray-700 cursor-pointer hover:bg-gray-800"}
       role="columnheader"
       aria-rowindex={1}
       aria-colindex={colIndex + 1}
