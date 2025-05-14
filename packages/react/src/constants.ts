@@ -293,7 +293,7 @@ export const PROPERTY_TYPES: Record<Property["type"], string> = {
 };
 
 export const ENTITY_FIELD_STATUS_LABELS: Record<Entity["fields"][string]["status"], string> = {
-  idle: "Waiting for configuration...",
+  idle: "",
   uploading: "Uploading",
   waiting: "Waiting for configuration...",
   computing: "Calculating",

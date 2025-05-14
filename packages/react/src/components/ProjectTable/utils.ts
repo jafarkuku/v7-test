@@ -4,7 +4,11 @@ import { ENTITY_FIELD_STATUS_LABELS } from "@/constants";
 
 import { RowData } from "./types";
 
-function getFieldInitialValue(field: Entity["fields"][number]): string {
+function getFieldInitialValue(field: Entity["fields"][string]): string {
+  if (!field) {
+    return "";
+  }
+
   if (field.property_type === ("number" as Property["type"])) {
     //@ts-expect-error I can see this value in the response
     return field.tool_value?.value?.number;
