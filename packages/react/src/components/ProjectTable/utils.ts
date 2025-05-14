@@ -2,25 +2,23 @@ import { Entity, Project, Property } from "@v7-product-interview-task/api";
 
 import { ENTITY_FIELD_STATUS_LABELS } from "@/constants";
 
-function getFieldInitialValue(field: Entity["fields"][number]): string | number | undefined {
-  if (field.status !== "complete") {
-    return ENTITY_FIELD_STATUS_LABELS[field.status];
-  }
+import { RowData } from "./types";
 
+function getFieldInitialValue(field: Entity["fields"][number]): string {
   if (field.property_type === ("number" as Property["type"])) {
-    //@ts-expect-error I can see this value in the return
+    //@ts-expect-error I can see this value in the response
     return field.tool_value?.value?.number;
   }
 
   if (field.property_type === "file") {
-    //@ts-expect-error I can see this value in the return
-    return field.tool_value?.value?.original_filename;
+    //@ts-expect-error I can see this value in the response
+    return field.manual_value?.original_filename;
   }
 
   return (
     field.tool_value?.value?.toString() ??
     field.manual_value?.value?.toString() ??
-    (field.status ? ENTITY_FIELD_STATUS_LABELS[field.status] : "")
+    ENTITY_FIELD_STATUS_LABELS[field.status]
   );
 }
 
@@ -36,7 +34,7 @@ export function buildRows({
   workspaceId: string;
   projectId: string;
   onSaveCell?: (rowId: string, slug: string, value: string) => void;
-}) {
+}): RowData[] {
   return entities.map((entity, rowIdx) => ({
     key: entity.id,
     index: rowIdx + 1,

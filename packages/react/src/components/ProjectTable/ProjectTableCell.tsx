@@ -4,7 +4,6 @@ import { InputField } from "../ui/Input/Input";
 
 export interface ProjectTableCellProps {
   initialValue?: string;
-  status?: string;
   rowIndex: number;
   colIndex: number;
   onSave?: (newValue: string) => void;
